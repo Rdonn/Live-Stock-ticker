@@ -1,0 +1,12 @@
+holder:
+    def get_info(self):
+        url = '&'.join([self.prefix, 'symbol={}'.format(self.symbol), 'apikey={}'.format(KEY)])
+        u = ureq.urlopen(url).read().decode('utf-8')
+        dict = json.loads(u)
+        try:
+            self.price = dict['Global Quote']['05. price']
+            self.volume = dict['Global Quote']['06. volume']
+            self.change_percent = dict['Global Quote']['10. change percent']
+            print(self.price)
+        except:
+            simple_dialog(50, 50).throwable_by_other("NO")
